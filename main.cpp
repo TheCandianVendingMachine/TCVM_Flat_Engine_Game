@@ -1,46 +1,49 @@
 // Flat Engine Game
 // A game that will be made alongside the engine. Meant to reduce scope of the engine
-#include <fe/time/time.hpp>
-#include <fe/time/clock.hpp>
-#include <fe/time/countdown.hpp>
 #include <iostream>
-#include <thread>
+#include <fe/subsystems/memory/memoryManager.hpp>
 
 int main()
     {
-        fe::clock test;
-        fe::countdown count;
-        count.start(fe::seconds(1));
+        fe::memoryManager memManager;
+        memManager.startUp();
 
-        // Prints 0.500
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
-        test.stop(true);
-        std::cout << test.getTime().asSeconds() << "\n";
+        int *unsafeAlloc = static_cast<int*>(FE_ALLOC_UNSAFE(sizeof(int)));
+        *unsafeAlloc = 15;
 
-        // Prints 0, 500
-        std::cout << "Done: " << count.isDone() << " " << count.timeUntilCompletion().asMilliseconds() << "\n";
+        auto markerFirst = fe::memoryManager::get().getStackAllocater().getMarker();
+        int *stackAllocBeforeMarker = static_cast<int*>(FE_ALLOC_STACK(sizeof(int)));
+        *stackAllocBeforeMarker = 30;
 
-        // Prints 0.500
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
-        test.stop(false);
-        std::cout << test.getTime().asSeconds() << "\n";
+        auto marker = fe::memoryManager::get().getStackAllocater().getMarker();
+        int *stackAllocAfterMarker = static_cast<int*>(FE_ALLOC_STACK(sizeof(int)));
+        *stackAllocAfterMarker = 45;
 
-        // Prints 1
-        std::cout << "Done: " << count.isDone() << "\n";
-        count.start(fe::milliseconds(500));
+        std::cout << unsafeAlloc << " " << stackAllocBeforeMarker << " " << stackAllocAfterMarker << "\n";
+        std::cout << *unsafeAlloc << " " << *stackAllocBeforeMarker << " " << *stackAllocAfterMarker << "\n\n";
 
-        // Prints 0.750
-        std::this_thread::sleep_for(std::chrono::milliseconds(250));
-        std::cout << test.getTime().asSeconds() << "\n";
+        // Shows how freeing the stack to a marker doesnt invalidate pointers
+        FE_FREE_STACK(marker);
+        std::cout << unsafeAlloc << " " << stackAllocBeforeMarker << " " << stackAllocAfterMarker << "\n";
+        std::cout << *unsafeAlloc << " " << *stackAllocBeforeMarker << " " << *stackAllocAfterMarker << "\n\n";
 
-        // Prints epoch
-        std::cout << fe::clock::getTimeSinceEpoch().asSeconds() << "\n";
+        // Shows how once you free the stack you can overwrite the data
+        float *stackFree = static_cast<float*>(FE_ALLOC_STACK(sizeof(float)));
+        *stackFree = 60.f;
 
-        // Prints current date
-        std::cout << fe::clock::getFormattedTime("%c %Z") << "\n";
+        std::cout << unsafeAlloc << " " << stackAllocBeforeMarker << " " << stackAllocAfterMarker << " " << stackFree << "\n";
+        std::cout << *unsafeAlloc << " " << *stackAllocBeforeMarker << " " << *stackAllocAfterMarker << " " << *stackFree << "\n\n";
 
-        // Prints 0, 250
-        std::cout << "Done: " << count.isDone() << " " << count.timeUntilCompletion().asMilliseconds() << "\n";
+        // Shows how freeing the stack doesnt invalidate pointers, it only allows them to be overwritten
+        FE_FREE_STACK(markerFirst);
+
+        std::cout << unsafeAlloc << " " << stackAllocBeforeMarker << " " << stackAllocAfterMarker << " " << stackFree << "\n";
+        std::cout << *unsafeAlloc << " " << *stackAllocBeforeMarker << " " << *stackAllocAfterMarker << " " << *stackFree << "\n\n";
+
+        memManager.shutDown();
+
+        // Shows how we can't show the data anymore since it has been freed
+        std::cout << unsafeAlloc << " " << stackAllocBeforeMarker << " " << stackAllocAfterMarker << " " << stackFree << "\n";
 
         std::cin.get();
         return 0;
