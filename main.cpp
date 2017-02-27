@@ -1,32 +1,24 @@
 // Flat Engine Game
 // A game that will be made alongside the engine. Meant to reduce scope of the engine
 #include <iostream>
+#include <fe/debug/logger.hpp>
 #include <fe/subsystems/memory/memoryManager.hpp>
-#include <fe/subsystems/memory/poolAllocater.hpp>
 
 int main()
     {
-        fe::memoryManager memManager;
-        memManager.startUp(sizeof(int) * 5, sizeof(int));
+        fe::logger log;
+        log.startUp("output.txt");
 
-        fe::poolAllocater<int> poolAlloc;
-        poolAlloc.startUp(2, memManager.getBuffer());
+        FE_LOG("Logging to console + output", 123);
+        FE_CONSOLE_LOG("Logging to only console", 456);
 
-        int *i = poolAlloc.alloc();
-        *i = 5;
+        fe::memoryManager mm;
+        mm.startUp(3, 0);
 
-        int *j = poolAlloc.alloc();
-        *j = 10;
+        mm.alloc(4);
 
-        std::cout << i << " " << *i << " " << j << " " << *j << "\n";
-
-        poolAlloc.clear();
-        std::cout << i << " " << *i << " " << j << " " << *j << "\n";
-
-        j = poolAlloc.alloc();
-        std::cout << i << " " << *i << " " << j << " " << *j << "\n";
-
-        memManager.shutDown();
+        mm.shutDown();
+        log.shutDown();
         std::cin.get();
         return 0;
     }
