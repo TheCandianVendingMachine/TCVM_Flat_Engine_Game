@@ -4,13 +4,16 @@
 #include <fe/subsystems/memory/memoryManager.hpp>
 #include <fe/debug/logger.hpp>
 
+#include <fe/subsystems/resourceManager/resourceManager.hpp>
+#include <fe/debug/profiler.hpp>
+
 fe::memoryManager memManager;
 fe::logger logger;
 
 void init()
     {
-        memManager.startUp(sizeof(char) * 1024, sizeof(char) * 512);
         logger.startUp("output.txt");
+        memManager.startUp(sizeof(char) * 1024, sizeof(char) * 512); 
     }
 
 void deinit()
@@ -23,7 +26,15 @@ int main()
     {
         init();
 
+        fe::resourceManager manager;
+        manager.startUp(2);
+        manager.add("123", "test.png", fe::resourceObjectType::RESOURCE_TEXTURE);
 
+        PROFILE("abc");
+        FE_ALLOC_DIRECT("poop", 464);
+        END_PROFILE;
+
+        memManager.printDebugInformation();
 
         deinit();
         std::cin.get();
