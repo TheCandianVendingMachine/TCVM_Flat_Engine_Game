@@ -8,9 +8,8 @@ int main()
         fe::engine engine;
         engine.startUp();
 
-        fe::memoryManager::get().printDebugInformation();
+        engine.run();
 
         engine.shutDown();
-        std::cin.get();
         return 0;
     }
