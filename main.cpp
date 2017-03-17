@@ -62,11 +62,19 @@ class gameState : public fe::baseGameState
 int main()
     {
         fe::matrix3d a(1, 2, 3, 4, 5, 6, 7, 8, 9);
-        fe::matrix3d b(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        fe::matrix3d b;
 
-        auto trans = a.translatePoint(fe::Vector2d(1, 1));
+        sf::Transform trans(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
-        std::cout << trans.x << " " << trans.y;
+        a *= b;
+
+        //a.translate({ 5, 5 });
+        //trans.translate(5, 5);
+
+        std::cout << "[" << a.values[0] << " " << a.values[1] << " " << a.values[2] << "\n "
+                         << a.values[3] << " " << a.values[4] << " " << a.values[5] << "\n "
+                         << a.values[6] << " " << a.values[7] << " " << a.values[8] << "]";
+        
         fe::engine engine;
         engine.startUp();
 
