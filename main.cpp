@@ -6,6 +6,7 @@
 #include <fe/subsystems/gameState/gameState.hpp>
 #include <fe/entity/baseEntity.hpp>
 #include <fe/math/Vector2.hpp>
+#include <fe/math/matrix.hpp>
 #include <fe/debug/profiler.hpp>
 
 class testEntity : public fe::baseEntity
@@ -60,14 +61,20 @@ class gameState : public fe::baseGameState
 
 int main()
     {
+        fe::matrix3d a(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        fe::matrix3d b(1, 2, 3, 4, 5, 6, 7, 8, 9);
+
+        auto trans = a.translatePoint(fe::Vector2d(1, 1));
+
+        std::cout << trans.x << " " << trans.y;
         fe::engine engine;
         engine.startUp();
 
         gameState game;
         engine.queueState(&game);
 
-        fe::function<void(fe::memoryManager*)> a(&fe::memoryManager::get(), &fe::memoryManager::printDebugInformation);
-        fe::inputManager::get().add(fe::input<sf::Keyboard::Key, fe::memoryManager*>(false, true, sf::Keyboard::Tilde, a));
+        fe::function<void(fe::memoryManager*)> callback(&fe::memoryManager::get(), &fe::memoryManager::printDebugInformation);
+        fe::inputManager::get().add(fe::input<sf::Keyboard::Key, fe::memoryManager*>(false, true, sf::Keyboard::Tilde, callback));
         engine.run();
 
         engine.shutDown();
