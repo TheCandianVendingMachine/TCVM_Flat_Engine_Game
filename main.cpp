@@ -38,12 +38,6 @@ class testEntity : public fe::baseEntity
                 {
                     move(m_speed * deltaTime);
                     m_speed = fe::Vector2d();
-
-                    static int count = 0;
-                    if (fe::doesRayIntersect(m_bounds, fe::Vector2d(1280.f / 2.f, 720.f / 2.f), (fe::Vector2d(1280.f / 2.f, 720.f / 2.f) - fe::engine::getMousePos()).normalize()))
-                        {
-                            std::cout << "Yaaas " << count++ << "\n";
-                        }
                 }
     };
 
