@@ -2,31 +2,19 @@
 // A game that will be made alongside the engine. Meant to reduce scope of the engine
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include <fe/engine.hpp>
-#include <fe/subsystems/gameState/gameState.hpp>
 
 #include "entities/paddle.hpp"
-
-class gameState : public fe::baseGameState
-    {
-        private:
-        public:
-            void init()
-                {
-                    addEntity<paddle>(fe::Vector2d(40, 0));
-                }
-    };
-
-fe::engine engine;
+#include "gameStates/gameState.hpp"
 
 void debug()
     {
         fe::memoryManager::get().printDebugInformation();
-        std::cout << "\nFPS: " << engine.getFPS() << "\n\n";
+        std::cout << "\nFPS: " << fe::engine::getFPS() << "\n\n";
     }
 
 int main()
     {
+        fe::engine engine;
         engine.startUp();
 
         gameState game;
