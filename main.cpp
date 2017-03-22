@@ -2,6 +2,8 @@
 // A game that will be made alongside the engine. Meant to reduce scope of the engine
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <fe/misc/function.hpp>
+#include <functional>
 
 #include "entities/paddle.hpp"
 #include "gameStates/gameState.hpp"

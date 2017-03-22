@@ -15,6 +15,8 @@ class paddle : public fe::baseEntity
             void moveUp() { m_speed.y = -200.f; }
             void moveDown() { m_speed.y = 200.f; }
 
+            void onCollision() { std::cout << "a\n"; }
+
         public:
             paddle(fe::Vector2d position) : m_bounds(getPosition(), {20, 150})
                 {
@@ -29,6 +31,8 @@ class paddle : public fe::baseEntity
 
                     fe::inputManager::get().add<paddle>(fe::input<sf::Keyboard::Key, paddle*>(true, true, sf::Keyboard::Up, fe::function<void(paddle*)>(this, &paddle::moveUp)));
                     fe::inputManager::get().add<paddle>(fe::input<sf::Keyboard::Key, paddle*>(true, true, sf::Keyboard::Down, fe::function<void(paddle*)>(this, &paddle::moveDown)));
+
+                    m_bounds.m_callback = fe::function<void(paddle*)>(this, &paddle::onCollision).getFPtr();
                 }
 
             void update(float deltaTime)
