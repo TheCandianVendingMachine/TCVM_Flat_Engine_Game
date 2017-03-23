@@ -3,9 +3,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <fe/misc/function.hpp>
-#include <functional>
 
-#include "entities/paddle.hpp"
 #include "gameStates/gameState.hpp"
 
 void debug()
