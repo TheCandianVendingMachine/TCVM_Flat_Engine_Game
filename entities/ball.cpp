@@ -1,6 +1,6 @@
 #include "ball.hpp"
 
-void ball::onCollision()
+void ball::onCollision(const fe::collider *collision)
     {
         m_speed.x = -m_speed.x;
     }
@@ -18,7 +18,7 @@ ball::ball(fe::Vector2d position) : m_bounds(getPosition(), { 20, 20 })
 
         setPosition(position);
 
-        m_bounds.m_callback = fe::function<void, ball>(fe::fPtr<true, ball, void>(this, &ball::onCollision));
+        m_bounds.m_callback = fe::function<void, ball, const fe::collider*>(fe::fPtr<true, ball, void, const fe::collider*>(this, &ball::onCollision));
     }
 
 void ball::update(float deltaTime)

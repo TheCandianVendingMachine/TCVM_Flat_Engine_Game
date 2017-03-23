@@ -10,7 +10,7 @@ class ball : public fe::baseEntity
             fe::AABB<ball> m_bounds;
             fe::Vector2d m_speed;
 
-            void onCollision();
+            void onCollision(const fe::collider *collision);
 
         public:
             ball(fe::Vector2d position);
