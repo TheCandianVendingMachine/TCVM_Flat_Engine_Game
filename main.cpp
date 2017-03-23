@@ -22,7 +22,7 @@ int main()
         gameState game;
         engine.queueState(&game);
 
-        fe::inputManager::get().add(fe::input<sf::Keyboard::Key>(false, true, sf::Keyboard::Tilde, fe::function<void()>(debug)));
+        fe::inputManager::get().add(fe::input<sf::Keyboard::Key>(false, true, sf::Keyboard::Tilde, fe::function<void, void>(debug)));
         engine.run();
 
         engine.shutDown();
