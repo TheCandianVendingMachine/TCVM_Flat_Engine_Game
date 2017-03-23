@@ -9,7 +9,7 @@
 class paddle : public fe::baseEntity
     {
         private:
-            fe::AABB m_bounds;
+            fe::AABB<paddle> m_bounds;
             fe::Vector2d m_speed;
 
             void moveUp() { m_speed.y = -200.f; }
@@ -31,6 +31,8 @@ class paddle : public fe::baseEntity
 
                     fe::inputManager::get().add<paddle>(fe::input<sf::Keyboard::Key, paddle>(true, true, sf::Keyboard::Up, fe::function<void, paddle>(fe::fPtr<true, paddle, void>(this, &paddle::moveUp))));
                     fe::inputManager::get().add<paddle>(fe::input<sf::Keyboard::Key, paddle>(true, true, sf::Keyboard::Down, fe::function<void, paddle>(fe::fPtr<true, paddle, void>(this, &paddle::moveDown))));
+
+                    m_bounds.m_callback = fe::function<void, paddle>(fe::fPtr<true, paddle, void>(this, &paddle::onCollision));
                 }
 
             void update(float deltaTime)
