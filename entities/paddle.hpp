@@ -10,13 +10,15 @@ class paddle : public fe::baseEntity
     {
         private:
             fe::AABB<paddle> m_bounds;
-            fe::Vector2d m_speed;
+            fe::Vector2d m_velocity;
 
-            void moveUp() { m_speed.y = -200.f; }
-            void moveDown() { m_speed.y = 200.f; }
+            const float m_speed;
+
+            void moveUp() { m_velocity.y = -m_speed; }
+            void moveDown() { m_velocity.y = m_speed; }
 
         public:
-            paddle(fe::Vector2d position) : m_bounds(getPosition(), {20, 150})
+            paddle(fe::Vector2d position) : m_bounds(getPosition(), {20, 150}), m_speed(300.f)
                 {
                     m_verticies[0].position = sf::Vector2f(0, 0);
                     m_verticies[1].position = sf::Vector2f(20, 0);
@@ -33,8 +35,8 @@ class paddle : public fe::baseEntity
 
             void update(float deltaTime)
                 {
-                    move(m_speed * deltaTime);
-                    m_speed = fe::Vector2d();
+                    move(m_velocity * deltaTime);
+                    m_velocity = fe::Vector2d();
                     
                     if (getPosition().y + 150.f > fe::engine::getWindowSize().y)
                         {

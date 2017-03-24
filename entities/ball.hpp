@@ -8,7 +8,9 @@ class ball : public fe::baseEntity
     {
         private:
             fe::AABB<ball> m_bounds;
-            fe::Vector2d m_speed;
+            fe::Vector2d m_velocity;
+
+            const float m_speed;
 
             void onCollision(const fe::collider &collision);
 
