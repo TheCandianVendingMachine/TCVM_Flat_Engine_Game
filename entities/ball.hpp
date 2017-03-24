@@ -12,10 +12,10 @@ class ball : public fe::baseEntity
 
             const float m_speed;
 
-            void onCollision(const fe::collider &collision);
-
         public:
             ball(fe::Vector2d position);
             void update(float deltaTime);
             const fe::collider &getCollider();
+
+            void collision(const fe::collider &collision);
     };
