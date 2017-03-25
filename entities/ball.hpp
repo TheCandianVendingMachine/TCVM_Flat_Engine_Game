@@ -7,15 +7,15 @@
 class ball : public fe::baseEntity
     {
         private:
-            fe::AABB<ball> m_bounds;
             fe::Vector2d m_velocity;
 
             const float m_speed;
 
         public:
             ball(fe::Vector2d position);
+            void onAdd(fe::baseGameState &state);
+
             void update(float deltaTime);
-            const fe::collider &getCollider();
 
             void collision(const fe::collider &collision);
     };

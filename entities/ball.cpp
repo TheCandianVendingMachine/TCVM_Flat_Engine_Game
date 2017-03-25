@@ -1,5 +1,6 @@
 #include "ball.hpp"
 #include "paddle.hpp"
+#include <fe/subsystems/gameState/gameState.hpp>
 
 void ball::collision(const fe::collider &collision)
     {
@@ -24,7 +25,7 @@ void ball::collision(const fe::collider &collision)
             }
     }
 
-ball::ball(fe::Vector2d position) : m_bounds(getPosition(), { 20, 20 }, this), m_speed(300.f)
+ball::ball(fe::Vector2d position) : m_speed(300.f)
     {
         m_verticies[0].position = sf::Vector2f(0, 0);
         m_verticies[1].position = sf::Vector2f(20, 0);
@@ -38,6 +39,11 @@ ball::ball(fe::Vector2d position) : m_bounds(getPosition(), { 20, 20 }, this), m
         setPosition(position);
     }
 
+void ball::onAdd(fe::baseGameState &state)
+    {
+        addCollider(state.getCollisionHandler().add<fe::AABB<ball>>(fe::Vector2d(20, 20), this));
+    }
+
 void ball::update(float deltaTime)
     {
         if (getPosition().y < 0.f || getPosition().y + 20.f > fe::engine::getWindowSize().y)
@@ -46,9 +52,4 @@ void ball::update(float deltaTime)
             }
 
         move(m_velocity * deltaTime);
-    }
-
-const fe::collider &ball::getCollider()
-    {
-        return m_bounds;
     }
