@@ -25,6 +25,12 @@ void ball::collision(const fe::collider &collision)
             }
     }
 
+void ball::setDirection(int dir)
+    {
+        m_velocity.x = m_speed * dir;
+        m_velocity.y = 0;
+    }
+
 ball::ball(fe::Vector2d position) : m_speed(300.f)
     {
         m_verticies[0].position = sf::Vector2f(0, 0);
@@ -32,7 +38,8 @@ ball::ball(fe::Vector2d position) : m_speed(300.f)
         m_verticies[2].position = sf::Vector2f(20, 20);
         m_verticies[3].position = sf::Vector2f(0, 20);
 
-        m_velocity.x = m_speed;
+        // set a random direction
+        setDirection(rand() % 2);
 
         setColour(sf::Color::Blue);
 
@@ -46,7 +53,7 @@ void ball::onAdd(fe::baseGameState &state)
 
 void ball::update(float deltaTime)
     {
-        if (getPosition().y < 0.f || getPosition().y + 20.f > fe::engine::getWindowSize().y)
+        if (getPosition().y < 0.f || getPosition().y + 20.f > fe::engine::get().getWindowSize().y)
             {
                 m_velocity.y = -m_velocity.y;
             }

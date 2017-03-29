@@ -2,19 +2,17 @@
 // the main state that updates all entities
 #pragma once
 #include <fe/subsystems/gameState/gameState.hpp>
-#include <fe/engine.hpp>
-#include "../entities/paddle.hpp"
-#include "../entities/ball.hpp"
+#include <fe/subsystems/messaging/eventHandler.hpp>
 
-class gameState : public fe::baseGameState
+class gameState : public fe::baseGameState, public fe::eventHandler
     {
-        public:
-            void init()
-                {
-                    addEntity<paddle>(fe::Vector2d(40, 0));
-                    addEntity<paddle>(fe::engine::getWindowSize() - fe::Vector2d(40, 0));
+        private:
+            unsigned int m_ball;
 
-                    auto a = fe::engine::getWindowSize();
-                    addEntity<ball>(a / 2.f);
-                }
+            unsigned int m_lPaddle;
+            unsigned int m_rPaddle;
+
+        public:
+            void init();
+            void handleEvent(const fe::gameEvent &event);
     };

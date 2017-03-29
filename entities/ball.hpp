@@ -14,8 +14,9 @@ class ball : public fe::baseEntity
         public:
             ball(fe::Vector2d position);
             void onAdd(fe::baseGameState &state);
-
             void update(float deltaTime);
-
             void collision(const fe::collider &collision);
+
+            void setDirection(int dir);
+
     };

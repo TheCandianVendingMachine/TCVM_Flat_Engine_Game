@@ -26,9 +26,9 @@ void paddle::update(float deltaTime)
         move(m_velocity * deltaTime);
         m_velocity = fe::Vector2d();
 
-        if (getPosition().y + 150.f > fe::engine::getWindowSize().y)
+        if (getPosition().y + 150.f > fe::engine::get().getWindowSize().y)
             {
-                setPosition({ getPosition().x, fe::engine::getWindowSize().y - 150.f });
+                setPosition({ getPosition().x, fe::engine::get().getWindowSize().y - 150.f });
             }
 
         if (getPosition().y < 0.f)

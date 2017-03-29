@@ -5,11 +5,13 @@
 #include <fe/misc/function.hpp>
 
 #include "gameStates/gameState.hpp"
+#include <fe/engine.hpp>
+#include <fe/subsystems/input/inputManager.hpp>
 
 void debug()
     {
         fe::memoryManager::get().printDebugInformation();
-        std::cout << "\nFPS: " << fe::engine::getFPS() << "\n\n";
+        std::cout << "\nFPS: " << fe::engine::get().getFPS() << "\n\n";
     }
 
 int main()
