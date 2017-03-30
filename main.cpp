@@ -17,7 +17,7 @@ void debug()
 int main()
     {
         fe::engine engine;
-        engine.startUp();
+        engine.startUp(50000, 25000);
 
         gameState game;
         engine.queueState(&game);
