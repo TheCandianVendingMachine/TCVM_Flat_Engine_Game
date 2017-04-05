@@ -1,5 +1,6 @@
 #include "paddle.hpp"
 #include <fe/subsystems/gameState/gameState.hpp>
+#include <functional>
 
 paddle::paddle(fe::Vector2d position)   : m_speed(300.f)
     {
@@ -12,13 +13,13 @@ paddle::paddle(fe::Vector2d position)   : m_speed(300.f)
 
         setPosition(position);
 
-        fe::inputManager::get().add<paddle>(fe::input<sf::Keyboard::Key, paddle>(true, true, sf::Keyboard::Up, fe::function<void, paddle>(fe::fPtr<true, paddle, void>(this, &paddle::moveUp))));
-        fe::inputManager::get().add<paddle>(fe::input<sf::Keyboard::Key, paddle>(true, true, sf::Keyboard::Down, fe::function<void, paddle>(fe::fPtr<true, paddle, void>(this, &paddle::moveDown))));
+        fe::inputManager::get().add(fe::input<sf::Keyboard::Key>(true, true, sf::Keyboard::Up, std::bind(&paddle::moveUp, this)));
+        fe::inputManager::get().add(fe::input<sf::Keyboard::Key>(true, true, sf::Keyboard::Down, std::bind(&paddle::moveDown, this)));
     }
 
 void paddle::onAdd(fe::baseGameState &state)
     {
-        addCollider(state.getCollisionHandler().add<fe::AABB<paddle>>(fe::Vector2d(20, 150), this));
+        addCollider(state.getCollisionHandler().add<fe::AABB>(fe::Vector2d(20, 150)));
     }
 
 void paddle::update(float deltaTime)

@@ -10,7 +10,7 @@ goal::goal(fe::sceneGraph::EntityHandle ball, int goal, fe::Vector2d position) :
 
 void goal::onAdd(fe::baseGameState &state)
     {
-        addCollider(state.getCollisionHandler().add<fe::AABB<goal>>(fe::Vector2d(20, fe::engine::get().getWindowSize().y), this));
+        addCollider(state.getCollisionHandler().add<fe::AABB>(fe::Vector2d(20, fe::engine::get().getWindowSize().y)));
         enableCollision(false);
     }
 

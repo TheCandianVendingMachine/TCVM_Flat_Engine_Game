@@ -1,10 +1,11 @@
 #include "ball.hpp"
 #include "paddle.hpp"
 #include <fe/subsystems/gameState/gameState.hpp>
+#include <functional>
 
 void ball::collision(const fe::collider &collision)
     {
-        auto collider = static_cast<const fe::AABB<paddle>&>(collision);
+        auto collider = static_cast<const fe::AABB&>(collision);
         fe::Vector2d halfSize((collider.m_max / 2.f) + collider.m_position);
         // get line between the ball and the middle of the paddle
         fe::Vector2d differencePos = (getPosition() + (fe::Vector2d(20.f, 20.f) / 2.f)) - halfSize;
@@ -48,7 +49,7 @@ ball::ball(fe::Vector2d position) : m_speed(300.f)
 
 void ball::onAdd(fe::baseGameState &state)
     {
-        addCollider(state.getCollisionHandler().add<fe::AABB<ball>>(fe::Vector2d(20, 20), this));
+        addCollider(state.getCollisionHandler().add<fe::AABB>(fe::Vector2d(20, 20), std::bind(&ball::collision, this, std::placeholders::_1)));
     }
 
 void ball::update(float deltaTime)
