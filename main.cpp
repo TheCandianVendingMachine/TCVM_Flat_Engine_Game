@@ -18,8 +18,7 @@ int main()
         fe::engine engine;
         engine.startUp();
 
-        gameState game;
-        engine.queueState(&game);
+        engine.queueState(new gameState);
 
         fe::inputManager::get().add(fe::input<sf::Keyboard::Key>(false, true, sf::Keyboard::Tilde, debug));
         engine.run();

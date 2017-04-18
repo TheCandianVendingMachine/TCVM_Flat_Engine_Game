@@ -3,10 +3,24 @@
 #pragma once
 #include <fe/subsystems/gameState/gameState.hpp>
 #include <fe/subsystems/messaging/eventHandler.hpp>
+#include <fe/subsystems/resourceManager/resourceManager.hpp>
+#include <fe/gui/panel.hpp>
+#include <fe/time/countdown.hpp>
+
+#include <SFML/Graphics/Font.hpp>
 
 class gameState : public fe::baseGameState, public fe::eventHandler
     {
         private:
+            fe::gui::panel m_ui;
+            fe::resourceManager<sf::Font> m_fontManager;
+
+            unsigned int m_scoreLeftHandle;
+            unsigned int m_scoreRightHandle;
+
+            unsigned int m_scoreLeft;
+            unsigned int m_scoreRight;
+
             unsigned int m_ball;
 
             unsigned int m_lPaddle;
@@ -15,4 +29,7 @@ class gameState : public fe::baseGameState, public fe::eventHandler
         public:
             void init();
             void handleEvent(const fe::gameEvent &event);
+
+            void deinit();
+
     };
