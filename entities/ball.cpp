@@ -9,8 +9,18 @@ void ball::collision(const fe::collider &collision)
         fe::Vector2d halfSize((collider.m_max / 2.f) + collider.m_position);
         // get line between the ball and the middle of the paddle
         fe::Vector2d differencePos = (getPosition() + (fe::Vector2d(20.f, 20.f) / 2.f)) - halfSize;
+        
+        float dot = differencePos.normalize().dot(fe::Vector2d(1, 0));
 
-        m_velocity = differencePos.normalize() * (m_speed * (rand() % 3));
+        if (abs(dot) > 0.3f) 
+            {
+                m_velocity = differencePos.normalize() * (m_speed / abs(dot));
+            }
+        else
+            {
+                m_velocity = differencePos.normalize() * m_speed;
+            }
+
         if (abs(m_velocity.x) < 1.f)
             {
                 m_velocity.x = m_speed;
