@@ -32,6 +32,8 @@ void gameState::init()
 
         addPanel(&m_ui);
 
+        m_maxScore = 1;
+
         fe::engine::get().getEventSender()->subscribe(this, 0);
         fe::engine::get().getEventSender()->subscribe(this, 1);
     }
@@ -63,7 +65,7 @@ void gameState::handleEvent(const fe::gameEvent &event)
                         getEntity(m_ball)->setPosition(fe::engine::get().getWindowSize() / 2.f);
                         getEntity<ball>(m_ball)->setDirection(0);
 
-                        if (m_scoreLeft >= 1)
+                        if (m_scoreLeft >= m_maxScore)
                             {
                                 m_ui.removeElement(m_scoreLeftHandle);
                                 m_ui.removeElement(m_scoreRightHandle);
@@ -71,8 +73,9 @@ void gameState::handleEvent(const fe::gameEvent &event)
                                 auto handle = m_ui.addElement(new fe::gui::label(*m_fontManager.get("RobotFont"), "Game Over! Left Wins!"));
                                 static_cast<fe::gui::label*>(m_ui.getElement(handle))->setCharacterSize(64);
                                 m_ui.getElement(handle)->setPosition(fe::engine::get().getWindowSize() / 2.f);
+                                m_endGame.start(fe::seconds(3));
                             }
-                        else if (m_scoreRight >= 1)
+                        else if (m_scoreRight >= m_maxScore)
                             {
                                 m_ui.removeElement(m_scoreLeftHandle);
                                 m_ui.removeElement(m_scoreRightHandle);
@@ -80,6 +83,7 @@ void gameState::handleEvent(const fe::gameEvent &event)
                                 auto handle = m_ui.addElement(new fe::gui::label(*m_fontManager.get("RobotFont"), "Game Over! Right Wins!"));
                                 static_cast<fe::gui::label*>(m_ui.getElement(handle))->setCharacterSize(64);
                                 m_ui.getElement(handle)->setPosition(fe::engine::get().getWindowSize() / 2.f);
+                                m_endGame.start(fe::seconds(3));
                             }
                         else
                             {
@@ -109,6 +113,14 @@ void gameState::handleEvent(const fe::gameEvent &event)
                     break;
                 default:
                     break;
+            }
+    }
+
+void gameState::preUpdate()
+    {
+        if (m_endGame.isDone())
+            {
+                fe::engine::get().queuePop();
             }
     }
 

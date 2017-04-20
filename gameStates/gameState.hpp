@@ -15,6 +15,10 @@ class gameState : public fe::baseGameState, public fe::eventHandler
             fe::gui::panel m_ui;
             fe::resourceManager<sf::Font> m_fontManager;
 
+            fe::countdown m_endGame;
+
+            unsigned int m_maxScore;
+
             unsigned int m_scoreLeftHandle;
             unsigned int m_scoreRightHandle;
 
@@ -29,6 +33,8 @@ class gameState : public fe::baseGameState, public fe::eventHandler
         public:
             void init();
             void handleEvent(const fe::gameEvent &event);
+
+            void preUpdate();
 
             void deinit();
 
