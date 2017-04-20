@@ -3,6 +3,8 @@
 #include "../entities/ball.hpp"
 #include "../entities/goal.hpp"
 
+#include "../controller/playerController.hpp"
+
 #include <fe/subsystems/messaging/gameEvent.hpp>
 #include <fe/subsystems/messaging/eventSender.hpp>
 #include <fe/engine.hpp>
@@ -32,7 +34,10 @@ void gameState::init()
 
         addPanel(&m_ui);
 
-        m_maxScore = 1;
+        m_maxScore = 3;
+
+        m_left = new playerController(getEntity<paddle>(m_lPaddle), 0);
+        m_right = new playerController(getEntity<paddle>(m_rPaddle), 1);
 
         fe::engine::get().getEventSender()->subscribe(this, 0);
         fe::engine::get().getEventSender()->subscribe(this, 1);
@@ -48,11 +53,9 @@ void gameState::handleEvent(const fe::gameEvent &event)
                         switch (side)
                             {
                                 case 0:
-                                    std::cout << "Right Goal!\n";
                                     static_cast<fe::gui::label*>(m_ui.getElement(m_scoreRightHandle))->setString(std::to_string(++m_scoreRight).c_str());
                                     break;
                                 case 1:
-                                    std::cout << "Left Goal!\n";
                                     static_cast<fe::gui::label*>(m_ui.getElement(m_scoreLeftHandle))->setString(std::to_string(++m_scoreLeft).c_str());
                                     break;
                                 default:
@@ -61,6 +64,9 @@ void gameState::handleEvent(const fe::gameEvent &event)
 
                         getEntity(m_ball)->setPosition(fe::engine::get().getWindowSize() / 2.f);
                         getEntity<ball>(m_ball)->setDirection(0);
+
+                        m_left->enable(false);
+                        m_right->enable(false);
 
                         if (m_scoreLeft >= m_maxScore)
                             {
@@ -71,9 +77,6 @@ void gameState::handleEvent(const fe::gameEvent &event)
                                 static_cast<fe::gui::label*>(m_ui.getElement(handle))->setCharacterSize(64);
                                 m_ui.getElement(handle)->setPosition(fe::engine::get().getWindowSize() / 2.f);
                                 m_endGame.start(fe::seconds(3));
-
-                                fe::inputManager::get().setActive("up", false);
-                                fe::inputManager::get().setActive("down", false);
                             }
                         else if (m_scoreRight >= m_maxScore)
                             {
@@ -84,15 +87,12 @@ void gameState::handleEvent(const fe::gameEvent &event)
                                 static_cast<fe::gui::label*>(m_ui.getElement(handle))->setCharacterSize(64);
                                 m_ui.getElement(handle)->setPosition(fe::engine::get().getWindowSize() / 2.f);
                                 m_endGame.start(fe::seconds(3));
-
-                                fe::inputManager::get().setActive("up", false);
-                                fe::inputManager::get().setActive("down", false);
                             }
                         else
                             {
                                 fe::gameEvent newEvent(1, 1);
                                 newEvent.args[0] = event.args[0];
-                                fe::engine::get().getEventSender()->send(newEvent, id(), 2000.f);
+                                fe::engine::get().getEventSender()->send(newEvent, id(), 1000.f);
 
                                 getEntity(m_lPaddle)->setPosition(fe::Vector2d(40, 0));
                                 getEntity(m_rPaddle)->setPosition(fe::engine::get().getWindowSize() - fe::Vector2d(40, 0));
@@ -115,6 +115,9 @@ void gameState::handleEvent(const fe::gameEvent &event)
                                 default:
                                     break;
                             }
+
+                        m_left->enable(true);
+                        m_right->enable(true);
                     }
                     break;
                 default:

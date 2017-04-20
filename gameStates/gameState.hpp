@@ -9,6 +9,8 @@
 
 #include <SFML/Graphics/Font.hpp>
 
+#include "../controller/entityController.hpp"
+
 class gameState : public fe::baseGameState, public fe::eventHandler
     {
         private:
@@ -16,6 +18,9 @@ class gameState : public fe::baseGameState, public fe::eventHandler
             fe::resourceManager<sf::Font> m_fontManager;
 
             fe::countdown m_endGame;
+
+            entityController *m_left;
+            entityController *m_right;
 
             unsigned int m_maxScore;
 

@@ -12,9 +12,6 @@ paddle::paddle(fe::Vector2d position)   : m_speed(300.f)
         setColour(sf::Color::Blue);
 
         setPosition(position);
-
-        fe::inputManager::get().add("up", fe::input<sf::Keyboard::Key>(true, true, sf::Keyboard::Up, std::bind(&paddle::moveUp, this)));
-        fe::inputManager::get().add("down", fe::input<sf::Keyboard::Key>(true, true, sf::Keyboard::Down, std::bind(&paddle::moveDown, this)));
     }
 
 void paddle::onAdd(fe::baseGameState &state)

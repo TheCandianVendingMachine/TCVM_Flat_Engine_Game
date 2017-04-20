@@ -16,6 +16,9 @@ class paddle : public fe::baseEntity
             void moveUp() { m_velocity.y = -m_speed; }
             void moveDown() { m_velocity.y = m_speed; }
 
+            friend class playerController;
+            friend class aiController;
+
         public:
             paddle(fe::Vector2d position);
             void onAdd(fe::baseGameState &state);
