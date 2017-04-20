@@ -20,7 +20,7 @@ int main()
 
         engine.queueState(new gameState);
 
-        fe::inputManager::get().add(fe::input<sf::Keyboard::Key>(false, true, sf::Keyboard::Tilde, debug));
+        fe::inputManager::get().add("debug", fe::input<sf::Keyboard::Key>(false, true, sf::Keyboard::Tilde, debug));
         engine.run();
 
         engine.shutDown();

@@ -59,9 +59,6 @@ void gameState::handleEvent(const fe::gameEvent &event)
                                     break;
                             }
 
-                        getEntity(m_lPaddle)->setPosition(fe::Vector2d(40, 0));
-                        getEntity(m_rPaddle)->setPosition(fe::engine::get().getWindowSize() - fe::Vector2d(40, 0));
-
                         getEntity(m_ball)->setPosition(fe::engine::get().getWindowSize() / 2.f);
                         getEntity<ball>(m_ball)->setDirection(0);
 
@@ -74,6 +71,9 @@ void gameState::handleEvent(const fe::gameEvent &event)
                                 static_cast<fe::gui::label*>(m_ui.getElement(handle))->setCharacterSize(64);
                                 m_ui.getElement(handle)->setPosition(fe::engine::get().getWindowSize() / 2.f);
                                 m_endGame.start(fe::seconds(3));
+
+                                fe::inputManager::get().setActive("up", false);
+                                fe::inputManager::get().setActive("down", false);
                             }
                         else if (m_scoreRight >= m_maxScore)
                             {
@@ -84,12 +84,18 @@ void gameState::handleEvent(const fe::gameEvent &event)
                                 static_cast<fe::gui::label*>(m_ui.getElement(handle))->setCharacterSize(64);
                                 m_ui.getElement(handle)->setPosition(fe::engine::get().getWindowSize() / 2.f);
                                 m_endGame.start(fe::seconds(3));
+
+                                fe::inputManager::get().setActive("up", false);
+                                fe::inputManager::get().setActive("down", false);
                             }
                         else
                             {
                                 fe::gameEvent newEvent(1, 1);
                                 newEvent.args[0] = event.args[0];
                                 fe::engine::get().getEventSender()->send(newEvent, id(), 2000.f);
+
+                                getEntity(m_lPaddle)->setPosition(fe::Vector2d(40, 0));
+                                getEntity(m_rPaddle)->setPosition(fe::engine::get().getWindowSize() - fe::Vector2d(40, 0));
                             }
                     }
                     break;
