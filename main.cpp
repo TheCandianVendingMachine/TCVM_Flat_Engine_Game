@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 
 #include "gameStates/gameState.hpp"
+#include "gameStates/mainMenu.hpp"
+
 #include <fe/engine.hpp>
 #include <fe/subsystems/input/inputManager.hpp>
 
@@ -18,7 +20,7 @@ int main()
         fe::engine engine;
         engine.startUp();
 
-        engine.queueState(new gameState);
+        engine.queueState(new mainMenu);
 
         fe::inputManager::get().add("debug", fe::input<sf::Keyboard::Key>(false, true, sf::Keyboard::Tilde, debug));
         engine.run();
