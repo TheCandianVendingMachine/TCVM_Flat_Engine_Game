@@ -7,6 +7,7 @@
 
 #include <fe/subsystems/messaging/gameEvent.hpp>
 #include <fe/subsystems/messaging/eventSender.hpp>
+#include <fe/subsystems/gameState/gameStateMachine.hpp>
 #include <fe/engine.hpp>
 #include <fe/gui/label.hpp>
 #include <string>
@@ -129,7 +130,7 @@ void gameState::preUpdate()
     {
         if (m_endGame.isDone())
             {
-                fe::engine::get().queuePop();
+                fe::engine::get().getStateMachine().queuePop();
             }
     }
 
