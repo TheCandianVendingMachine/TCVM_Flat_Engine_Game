@@ -19,8 +19,8 @@ void gameState::init()
 
         m_ball = addEntity<ball>(fe::engine::get().getWindowSize() / 2.f);
 
-        addEntity<goal>(m_ball, 0, fe::Vector2d(0, 0));
-        addEntity<goal>(m_ball, 1, fe::Vector2d(fe::engine::get().getWindowSize().x - 20, 0));
+        addEntity<goal>(m_ball, 0, fe::Vector2d(0 - 20, 0));
+        addEntity<goal>(m_ball, 1, fe::Vector2d(fe::engine::get().getWindowSize().x, 0));
 
         sf::Font *font = m_fontManager.load("Roboto-Regular.ttf", "RobotFont");
         m_scoreLeftHandle =  m_ui.addElement(new fe::gui::label(*font, "0"));
