@@ -11,27 +11,24 @@ playerController::playerController(paddle *paddleEnt, int playerNum) : entityCon
         switch (playerNum)
             {
                 case 0:
-                    m_moveUp = "upP1";
-                    m_moveDown = "downP1";
-
-                    fe::inputManager::get().add(sf::Keyboard::W, up);
-                    fe::inputManager::get().add(sf::Keyboard::S, down);
+                    m_moveUp = sf::Keyboard::W;
+                    m_moveDown = sf::Keyboard::S;
                     break;
                 case 1:
-                    fe::inputManager::get().add(sf::Keyboard::Up, up);
-                    fe::inputManager::get().add(sf::Keyboard::Down, down);
+                    m_moveUp = sf::Keyboard::Up;
+                    m_moveDown = sf::Keyboard::Down;
                     break;
                 default:
                     break;
             }
+
+        fe::inputManager::get().add(m_moveUp, up);
+        fe::inputManager::get().add(m_moveDown, down);
     }
 
 void playerController::enable(bool value)
     {
         m_enabled = value;
-        fe::inputManager::get().setActive(sf::Keyboard::Up, value);
-        fe::inputManager::get().setActive(sf::Keyboard::Down, value);
-
-        fe::inputManager::get().setActive(sf::Keyboard::W, value);
-        fe::inputManager::get().setActive(sf::Keyboard::S, value);
+        fe::inputManager::get().setActive(m_moveUp, value);
+        fe::inputManager::get().setActive(m_moveDown, value);
     }

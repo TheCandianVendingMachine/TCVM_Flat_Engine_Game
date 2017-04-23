@@ -37,7 +37,7 @@ void gameState::init()
 
         addPanel(&m_ui);
 
-        m_maxScore = 1;
+        m_maxScore = 3;
 
         m_left = new playerController(getEntity<paddle>(m_lPaddle), 0);
         m_right = new playerController(getEntity<paddle>(m_rPaddle), 1);
