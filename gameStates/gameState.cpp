@@ -5,6 +5,8 @@
 
 #include "../controller/playerController.hpp"
 
+#include "mainMenu.hpp"
+
 #include <fe/subsystems/messaging/gameEvent.hpp>
 #include <fe/subsystems/messaging/eventSender.hpp>
 #include <fe/subsystems/gameState/gameStateMachine.hpp>
@@ -35,7 +37,7 @@ void gameState::init()
 
         addPanel(&m_ui);
 
-        m_maxScore = 3;
+        m_maxScore = 1;
 
         m_left = new playerController(getEntity<paddle>(m_lPaddle), 0);
         m_right = new playerController(getEntity<paddle>(m_rPaddle), 1);
@@ -131,6 +133,7 @@ void gameState::preUpdate()
         if (m_endGame.isDone())
             {
                 fe::engine::get().getStateMachine().queuePop();
+                fe::engine::get().getStateMachine().queuePush<mainMenu>();
             }
     }
 

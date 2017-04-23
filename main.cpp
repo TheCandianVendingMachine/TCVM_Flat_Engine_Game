@@ -9,7 +9,6 @@
 
 #include <fe/engine.hpp>
 #include <fe/subsystems/input/inputManager.hpp>
-#include <exception>
 
 // remove console in release builds
 #ifndef _DEBUG
@@ -19,7 +18,7 @@
 
 void debug()
     {
-        fe::memoryManager::get().printDebugInformation();
+        //fe::memoryManager::get().printDebugInformation();
         std::cout << "\nFPS: " << fe::engine::get().getFPS() << "\n\n";
     }
 
@@ -27,11 +26,11 @@ void debug()
 int main()
     {
         fe::engine engine;
-        engine.startUp();
+        engine.startUp(64_MiB, 32_MiB);
 
         engine.getStateMachine().queuePush<mainMenu>();
 
-        fe::inputManager::get().add("debug", fe::input<sf::Keyboard::Key>(false, true, sf::Keyboard::Tilde, debug));
+        fe::inputManager::get().add(sf::Keyboard::Tilde, fe::input(debug, false));
 
         engine.run();
 
