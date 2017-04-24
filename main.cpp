@@ -28,7 +28,7 @@ int main()
         fe::engine engine;
         engine.startUp(64_MiB, 32_MiB);
 
-        engine.getStateMachine().queuePush<gameState>();
+        engine.getStateMachine().queuePush<mainMenu>();
 
         fe::inputManager::get().add(sf::Keyboard::Tilde, fe::input(debug, false));
 
