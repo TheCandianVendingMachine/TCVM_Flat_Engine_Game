@@ -6,6 +6,8 @@
 #include <fe/subsystems/gameState/gameStateMachine.hpp>
 #include <fe/engine.hpp>
 
+#include <SFML/Graphics/RenderWindow.hpp>
+
 void mainMenu::init()
     {
         m_gui.setSize(fe::engine::get().getWindowSize());
@@ -17,9 +19,10 @@ void mainMenu::init()
 
         auto startButtonHandle = m_gui.addElement(new fe::gui::button(fe::Vector2d(200, 35), []() { fe::engine::get().getStateMachine().queuePop(); fe::engine::get().getStateMachine().queuePush<gameState>(); }));
         auto startLabelHandle = m_gui.addElement(new fe::gui::label(*font, "Start Game"));
-
         auto startButton = m_gui.getElement(startButtonHandle);
         auto startLabel = m_gui.getElement(startLabelHandle);
+
+        auto quitButtonHandle = m_gui.addElement(new fe::gui::button(fe::Vector2d(25, 25), []() { fe::engine::get().close(); }));
 
         startLabel->setParent(startButton);
         startLabel->setPosition(startButton->getSize() / 2.f);
