@@ -93,12 +93,12 @@ void gameState::handleEvent(const fe::gameEvent &event)
                             }
                         else
                             {
+                                getEntity(m_lPaddle)->setPosition(fe::Vector2d(40, 0));
+                                getEntity(m_rPaddle)->setPosition(fe::engine::get().getWindowSize() - fe::Vector2d(40, 0));
+
                                 fe::gameEvent newEvent(1, 1);
                                 newEvent.args[0] = event.args[0];
                                 fe::engine::get().getEventSender()->send(newEvent, id(), 1000.f);
-
-                                getEntity(m_lPaddle)->setPosition(fe::Vector2d(40, 0));
-                                getEntity(m_rPaddle)->setPosition(fe::engine::get().getWindowSize() - fe::Vector2d(40, 0));
                             }
                     }
                     break;

@@ -21,6 +21,6 @@ void goal::update(float deltaTime)
                 fe::gameEvent msg(0, 0);
                 msg.args[0] = fe::gameEventArgument(m_goalSide);
 
-                fe::engine().get().getEventSender()->send(msg, 0);
+                fe::engine::get().getEventSender()->send(msg, 0);
             }
     }
