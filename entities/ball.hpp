@@ -19,4 +19,6 @@ class ball : public fe::baseEntity
 
             void setDirection(int dir);
 
+            fe::Vector2d getVelocity();
+
     };

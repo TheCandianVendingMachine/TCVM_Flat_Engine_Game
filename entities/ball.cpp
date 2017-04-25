@@ -42,6 +42,11 @@ void ball::setDirection(int dir)
         m_velocity.y = 0;
     }
 
+fe::Vector2d ball::getVelocity()
+    {
+        return m_velocity;
+    }
+
 ball::ball(fe::Vector2d position) : m_speed(300.f)
     {
         m_verticies[0].position = sf::Vector2f(0, 0);

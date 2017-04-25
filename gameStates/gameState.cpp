@@ -4,6 +4,7 @@
 #include "../entities/goal.hpp"
 
 #include "../controller/playerController.hpp"
+#include "../controller/aiController.hpp"
 
 #include "mainMenu.hpp"
 
@@ -40,7 +41,7 @@ void gameState::init()
         m_maxScore = 3;
 
         m_left = new playerController(getEntity<paddle>(m_lPaddle), 0);
-        m_right = new playerController(getEntity<paddle>(m_rPaddle), 1);
+        m_right = new aiController(getEntity<paddle>(m_rPaddle), m_ball);
 
         fe::engine::get().getEventSender()->subscribe(this, 0);
         fe::engine::get().getEventSender()->subscribe(this, 1);
@@ -134,6 +135,10 @@ void gameState::preUpdate()
             {
                 fe::engine::get().getStateMachine().queuePop();
                 fe::engine::get().getStateMachine().queuePush<mainMenu>();
+            }
+        else
+            {
+                m_right->update();
             }
     }
 
