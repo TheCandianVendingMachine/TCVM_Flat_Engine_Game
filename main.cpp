@@ -31,6 +31,8 @@ int main()
         engine.getStateMachine().queuePush<mainMenu>();
 
         fe::inputManager::get().add(sf::Keyboard::Tilde, fe::input(debug, false));
+        fe::inputManager::get().add(sf::Keyboard::Tab,
+            fe::input([]() {fe::engine::get().getStateMachine().queuePop();}, false));
 
         engine.run();
 
