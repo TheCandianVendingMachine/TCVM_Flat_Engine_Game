@@ -7,6 +7,7 @@
 #include "../controller/aiController.hpp"
 
 #include "mainMenu.hpp"
+#include "pauseMenu.hpp"
 
 #include <fe/subsystems/messaging/gameEvent.hpp>
 #include <fe/subsystems/messaging/eventSender.hpp>
@@ -38,13 +39,16 @@ void gameState::init()
 
         addPanel(&m_ui);
 
-        m_maxScore = 3;
+        m_maxScore = 0;
 
         m_left = new playerController(getEntity<paddle>(m_lPaddle), 0);
         m_right = new aiController(getEntity<paddle>(m_rPaddle), m_ball);
 
         fe::engine::get().getEventSender()->subscribe(this, 0);
         fe::engine::get().getEventSender()->subscribe(this, 1);
+
+        fe::inputManager::get().add(sf::Keyboard::Escape,
+            fe::input([]() {fe::engine::get().getStateMachine().queuePush<pauseMenu>(); }, false));
     }
 
 void gameState::handleEvent(const fe::gameEvent &event)
