@@ -48,7 +48,7 @@ void gameState::init()
         fe::engine::get().getEventSender()->subscribe(this, 1);
 
         fe::inputManager::get().add(sf::Keyboard::Escape,
-            fe::input([]() {fe::engine::get().getStateMachine().queuePush<pauseMenu>(); }, false));
+            fe::input([]() {fe::engine::get().getStateMachine().queuePush<pauseMenu>(fe::gameStateMachine::stateOptions::RENDER_OVERTOP); }, false));
     }
 
 void gameState::handleEvent(const fe::gameEvent &event)
