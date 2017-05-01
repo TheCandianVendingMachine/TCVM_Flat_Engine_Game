@@ -8,27 +8,36 @@ playerController::playerController(paddle *paddleEnt, int playerNum) : entityCon
         fe::input up(std::bind(&paddle::moveUp, m_controlling), true);
         fe::input down(std::bind(&paddle::moveDown, m_controlling), true);
 
+        sf::Keyboard::Key moveUp;
+        sf::Keyboard::Key moveDown;
+
         switch (playerNum)
             {
                 case 0:
-                    m_moveUp = sf::Keyboard::W;
-                    m_moveDown = sf::Keyboard::S;
+                    moveUp = sf::Keyboard::W;
+                    moveDown = sf::Keyboard::S;
                     break;
                 case 1:
-                    m_moveUp = sf::Keyboard::Up;
-                    m_moveDown = sf::Keyboard::Down;
+                    moveUp = sf::Keyboard::Up;
+                    moveDown = sf::Keyboard::Down;
                     break;
                 default:
                     break;
             }
 
-        fe::inputManager::get().add(m_moveUp, up);
-        fe::inputManager::get().add(m_moveDown, down);
+        m_upHandle = fe::inputManager::get().add(moveUp, up);
+        m_upHandle = fe::inputManager::get().add(moveDown, down);
     }
 
 void playerController::enable(bool value)
     {
         m_enabled = value;
-        fe::inputManager::get().setActive(m_moveUp, value);
-        fe::inputManager::get().setActive(m_moveDown, value);
+        fe::inputManager::get().setActive(m_upHandle, value);
+        fe::inputManager::get().setActive(m_downHandle, value);
+    }
+
+playerController::~playerController()
+    {
+        fe::inputManager::get().remove(m_upHandle);
+        fe::inputManager::get().remove(m_downHandle);
     }

@@ -44,11 +44,13 @@ void gameState::init()
         m_left = new playerController(getEntity<paddle>(m_lPaddle), 0);
         m_right = new aiController(getEntity<paddle>(m_rPaddle), m_ball);
 
+        getEntity<ball>(m_ball)->setDirection(1);
+
         fe::engine::get().getEventSender()->subscribe(this, 0);
         fe::engine::get().getEventSender()->subscribe(this, 1);
 
-        fe::inputManager::get().add(sf::Keyboard::Escape,
-            fe::input([]() {fe::engine::get().getStateMachine().queuePush<pauseMenu>(fe::gameStateMachine::stateOptions::RENDER_OVERTOP); }, false));
+        m_pauseKeyHandle = fe::inputManager::get().add(sf::Keyboard::Escape,
+                           fe::input([]() {fe::engine::get().getStateMachine().queuePush<pauseMenu>(fe::gameStateMachine::stateOptions::RENDER_OVERTOP); }, false));
     }
 
 void gameState::handleEvent(const fe::gameEvent &event)
@@ -149,4 +151,5 @@ void gameState::preUpdate()
 void gameState::deinit()
     {
         m_fontManager.shutDown();
+        fe::inputManager::get().remove(m_pauseKeyHandle);
     }

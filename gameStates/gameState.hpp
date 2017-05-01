@@ -22,6 +22,8 @@ class gameState : public fe::baseGameState, public fe::eventHandler
             entityController *m_left;
             entityController *m_right;
 
+            unsigned int m_pauseKeyHandle;
+
             unsigned int m_maxScore;
 
             unsigned int m_scoreLeftHandle;

@@ -8,11 +8,13 @@
 class playerController : public entityController
     {
         private:
-            sf::Keyboard::Key m_moveUp;
-            sf::Keyboard::Key m_moveDown;
+            unsigned int m_upHandle;
+            unsigned int m_downHandle;
 
         public:
             playerController(paddle *paddle, int playerNumber = 0);
             void enable(bool value);
+
+            ~playerController();
 
     };
