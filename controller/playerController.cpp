@@ -26,7 +26,7 @@ playerController::playerController(paddle *paddleEnt, int playerNum) : entityCon
             }
 
         m_upHandle = fe::inputManager::get().add(moveUp, up);
-        m_upHandle = fe::inputManager::get().add(moveDown, down);
+        m_downHandle = fe::inputManager::get().add(moveDown, down);
     }
 
 void playerController::enable(bool value)
