@@ -45,7 +45,10 @@ void gameState::init()
         m_right = new aiController(getEntity<paddle>(m_rPaddle), m_ball);
 
         getEntity<ball>(m_ball)->setDirection(1);
+    }
 
+void gameState::onActive()
+    {
         fe::engine::get().getEventSender()->subscribe(this, 0);
         fe::engine::get().getEventSender()->subscribe(this, 1);
 
@@ -148,8 +151,13 @@ void gameState::preUpdate()
             }
     }
 
+void gameState::onDeactive()
+    {
+        fe::inputManager::get().remove(m_pauseKeyHandle);
+        fe::engine::get().getEventSender()->unsubscribe(this);
+    }
+
 void gameState::deinit()
     {
         m_fontManager.shutDown();
-        fe::inputManager::get().remove(m_pauseKeyHandle);
     }

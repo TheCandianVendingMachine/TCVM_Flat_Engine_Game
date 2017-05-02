@@ -39,10 +39,13 @@ class gameState : public fe::baseGameState, public fe::eventHandler
 
         public:
             void init();
+            void onActive();
+
             void handleEvent(const fe::gameEvent &event);
 
             void preUpdate();
 
+            void onDeactive();
             void deinit();
 
     };
