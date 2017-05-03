@@ -21,4 +21,5 @@ class pauseMenu : public fe::baseGameState
             void onActive();
             void onDeactive();
 
+            void deinit();
     };

@@ -45,5 +45,9 @@ void pauseMenu::onActive()
 void pauseMenu::onDeactive()
     {
         fe::inputManager::get().removeObject(m_unpauseKeyHandle);
+    }
+
+void pauseMenu::deinit()
+    {
         m_font.shutDown();
     }
