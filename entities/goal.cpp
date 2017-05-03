@@ -3,7 +3,7 @@
 #include <fe/subsystems/messaging/eventSender.hpp>
 #include <fe/engine.hpp>
 
-goal::goal(fe::sceneGraph::EntityHandle ball, int goal, fe::Vector2d position) : m_goalSide(goal), m_ball(ball)
+goal::goal(fe::Handle ball, int goal, fe::Vector2d position) : m_goalSide(goal), m_ball(ball)
     {
         setPosition(position);
     }

@@ -38,6 +38,6 @@ void playerController::enable(bool value)
 
 playerController::~playerController()
     {
-        fe::inputManager::get().remove(m_upHandle);
-        fe::inputManager::get().remove(m_downHandle);
+        fe::inputManager::get().removeObject(m_upHandle);
+        fe::inputManager::get().removeObject(m_downHandle);
     }

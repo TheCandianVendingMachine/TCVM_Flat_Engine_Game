@@ -153,7 +153,7 @@ void gameState::preUpdate()
 
 void gameState::onDeactive()
     {
-        fe::inputManager::get().remove(m_pauseKeyHandle);
+        fe::inputManager::get().removeObject(m_pauseKeyHandle);
         fe::engine::get().getEventSender()->unsubscribe(this);
     }
 

@@ -7,11 +7,11 @@
 class goal : public fe::baseEntity
     {
         private:
-            fe::sceneGraph::EntityHandle m_ball;
+            fe::Handle m_ball;
             int m_goalSide;
 
         public:
-            goal(fe::sceneGraph::EntityHandle ball, int goal, fe::Vector2d position);
+            goal(fe::Handle ball, int goal, fe::Vector2d position);
 
             void onAdd(fe::baseGameState &state);
             void update(float deltaTime);

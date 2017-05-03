@@ -4,6 +4,8 @@
 #include <fe/gui/label.hpp>
 #include <fe/gui/button.hpp>
 #include <fe/subsystems/gameState/gameStateMachine.hpp>
+#include <fe/subsystems/input/input.hpp>
+#include <fe/subsystems/input/inputManager.hpp>
 #include <fe/engine.hpp>
 
 void pauseMenu::init()
@@ -32,4 +34,16 @@ void pauseMenu::init()
 
         m_gui.setPanelClearColour(sf::Color::Transparent);
         addPanel(&m_gui);
+    }
+
+void pauseMenu::onActive()
+    {
+        m_unpauseKeyHandle = fe::inputManager::get().add(sf::Keyboard::Escape,
+                             fe::input([]() { fe::engine::get().getStateMachine().queuePop(); }, false));
+    }
+
+void pauseMenu::onDeactive()
+    {
+        fe::inputManager::get().removeObject(m_unpauseKeyHandle);
+        m_font.shutDown();
     }
