@@ -148,14 +148,15 @@ void gameState::preUpdate()
         else
             {
                 m_left->update();
-                m_right->update();
+                //m_right->update();
             }
     }
 
 void gameState::onDeactive()
     {
         fe::inputManager::get().removeObject(m_pauseKeyHandle);
-        fe::engine::get().getEventSender()->unsubscribe(this);
+        fe::engine::get().getEventSender()->unsubscribe(this, 0);
+        fe::engine::get().getEventSender()->unsubscribe(this, 1);
     }
 
 void gameState::deinit()
