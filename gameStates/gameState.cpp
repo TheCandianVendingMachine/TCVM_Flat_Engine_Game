@@ -147,6 +147,7 @@ void gameState::preUpdate()
             }
         else
             {
+                m_left->update();
                 m_right->update();
             }
     }
