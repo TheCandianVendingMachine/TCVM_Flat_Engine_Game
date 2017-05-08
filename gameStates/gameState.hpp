@@ -16,6 +16,7 @@ class gameState : public fe::baseGameState, public fe::eventHandler
         private:
             fe::gui::panel m_ui;
             fe::resourceManager<sf::Font> m_fontManager;
+            fe::resourceManager<sf::Texture> m_textureManager;
 
             fe::countdown m_endGame;
 

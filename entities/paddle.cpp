@@ -10,7 +10,6 @@ paddle::paddle(fe::Vector2d position)   : m_speed(300.f)
         m_verticies[3].position = sf::Vector2f(0, 150);
 
         setColour(sf::Color::Blue);
-
         setPosition(position);
     }
 
