@@ -49,10 +49,7 @@ fe::Vector2d ball::getVelocity()
 
 ball::ball(fe::Vector2d position) : m_speed(300.f)
     {
-        m_verticies[0].position = sf::Vector2f(0, 0);
-        m_verticies[1].position = sf::Vector2f(20, 0);
-        m_verticies[2].position = sf::Vector2f(20, 20);
-        m_verticies[3].position = sf::Vector2f(0, 20);
+        setSize({20, 20});
 
         // set a random direction
         setDirection(rand() % 2);

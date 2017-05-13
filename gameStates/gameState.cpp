@@ -21,9 +21,6 @@ void gameState::init()
         m_lPaddle = addEntity<paddle>(fe::Vector2d(40, 0));
         m_rPaddle = addEntity<paddle>(fe::engine::get().getWindowSize() - fe::Vector2d(40, 0));
 
-        getEntity(m_lPaddle)->setTexture(m_textureManager.load("texture.bmp", "paddle"));
-        getEntity(m_rPaddle)->setTexture(m_textureManager.get("paddle"));
-
         m_ball = addEntity<ball>(fe::engine::get().getWindowSize() / 2.f);
 
         addEntity<goal>(m_ball, 0, fe::Vector2d(0 - 20, 0));
