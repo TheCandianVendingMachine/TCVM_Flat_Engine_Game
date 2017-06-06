@@ -10,29 +10,12 @@
 #include <fe/engine.hpp>
 #include <fe/subsystems/input/inputManager.hpp>
 
-// remove console in release builds
-#ifndef _DEBUG
-#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
-#endif
-
-
-void debug()
-    {
-        //fe::memoryManager::get().printDebugInformation();
-        std::cout << "\nFPS: " << fe::engine::get().getFPS() << "\n\n";
-    }
-
-
 int main()
     {
         fe::engine engine;
-        engine.startUp(64_MiB, 32_MiB);
+        engine.startUp(64_MiB, 50_MiB);
 
         engine.getStateMachine().queuePush<mainMenu>();
-
-        fe::inputManager::get().add(sf::Keyboard::Tilde, fe::input(debug, false));
-        fe::inputManager::get().add(sf::Keyboard::Tab,
-            fe::input([]() {fe::engine::get().getStateMachine().queuePop();}, false));
 
         engine.run();
 

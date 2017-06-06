@@ -1,18 +1,20 @@
 #include "ball.hpp"
 #include "paddle.hpp"
 #include <fe/subsystems/gameState/gameState.hpp>
+#include <fe/collision/collisionData.hpp>
 #include <functional>
 
-void ball::collision(const fe::collider &collision)
+void ball::collision(fe::collisionData &collision)
     {
-        auto collider = static_cast<const fe::AABB&>(collision);
-        fe::Vector2d halfSize((collider.m_max / 2.f) + collider.m_position);
+        auto collider = static_cast<fe::AABB*>(collision.m_collider);
+
+        fe::Vector2d halfSize((collider->m_max / 2.f) + collider->m_position);
         // get line between the ball and the middle of the paddle
         fe::Vector2d differencePos = (getPosition() + (fe::Vector2d(20.f, 20.f) / 2.f)) - halfSize;
         
         float dot = differencePos.normalize().dot(fe::Vector2d(1, 0));
 
-        if (abs(dot) > 0.3f) 
+        if (abs(dot) > 0.4f) 
             {
                 m_velocity = differencePos.normalize() * (m_speed / abs(dot));
             }
@@ -28,11 +30,11 @@ void ball::collision(const fe::collider &collision)
 
         if (differencePos.x > 0.f) 
             {
-                setPosition({ collider.m_max.x + collider.m_position.x + 1, getPosition().y });
+                setPosition({ collider->m_max.x + collider->m_position.x + 1, getPosition().y });
             }
         else
             {
-                setPosition({ collider.m_position.x - 20.f - 1.f, getPosition().y });
+                setPosition({ collider->m_position.x - 20.f - 1.f, getPosition().y });
             }
     }
 
@@ -49,7 +51,7 @@ fe::Vector2d ball::getVelocity()
 
 ball::ball(fe::Vector2d position) : m_speed(300.f)
     {
-        setSize({20, 20});
+        setVertSize({20, 20});
 
         // set a random direction
         setDirection(rand() % 2);

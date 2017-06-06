@@ -10,7 +10,7 @@
 
 void pauseMenu::init()
     {
-        sf::Font *font = m_font.load("Roboto-Regular.ttf", "robot");
+        const sf::Font *font = fe::engine::get().getResourceManager<sf::Font>()->load("Roboto-Regular.ttf", "robot");
         auto resumeButton = m_gui.addElement(new fe::gui::button(fe::Vector2d(200, 35), []() {fe::engine::get().getStateMachine().queuePop(); }));
         auto exitToMenu = m_gui.addElement(new fe::gui::button(fe::Vector2d(200, 35), []() {fe::engine::get().getStateMachine().queueClear(); fe::engine::get().getStateMachine().queuePush<mainMenu>(); }));
 
@@ -48,6 +48,4 @@ void pauseMenu::onDeactive()
     }
 
 void pauseMenu::deinit()
-    {
-        m_font.shutDown();
-    }
+    {}

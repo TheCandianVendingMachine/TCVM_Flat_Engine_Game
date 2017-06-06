@@ -12,7 +12,7 @@ void mainMenu::init()
     {
         m_gui.setSize(fe::engine::get().getWindowSize());
 
-        sf::Font *font = m_font.load("Roboto-Regular.ttf", "RobotFont");
+        const sf::Font *font = fe::engine::get().getResourceManager<sf::Font>()->load("Roboto-Regular.ttf", "RobotFont");
         auto title = m_gui.addElement(new fe::gui::label(*font, "Flat Engine Pong"));
         static_cast<fe::gui::label*>(m_gui.getElement(title))->setCharacterSize(72);
         m_gui.setElementPosition(title, { 0.5f, 0.15f });

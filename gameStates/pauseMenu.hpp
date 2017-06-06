@@ -10,7 +10,6 @@
 class pauseMenu : public fe::baseGameState
     {
         private:
-            fe::resourceManager<sf::Font> m_font;
             fe::gui::panel m_gui;
 
             unsigned int m_unpauseKeyHandle;

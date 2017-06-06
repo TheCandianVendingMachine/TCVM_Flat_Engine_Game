@@ -26,7 +26,7 @@ void gameState::init()
         addEntity<goal>(m_ball, 0, fe::Vector2d(0 - 20, 0));
         addEntity<goal>(m_ball, 1, fe::Vector2d(fe::engine::get().getWindowSize().x, 0));
 
-        sf::Font *font = m_fontManager.load("Roboto-Regular.ttf", "RobotFont");
+        const sf::Font *font = fe::engine::get().getResourceManager<sf::Font>()->load("Roboto-Regular.ttf", "RobotFont");
         m_scoreLeftHandle =  m_ui.addElement(new fe::gui::label(*font, "0"));
         m_scoreRightHandle = m_ui.addElement(new fe::gui::label(*font, "0"));
 
@@ -86,7 +86,7 @@ void gameState::handleEvent(const fe::gameEvent &event)
                                 m_ui.removeElement(m_scoreLeftHandle);
                                 m_ui.removeElement(m_scoreRightHandle);
 
-                                auto handle = m_ui.addElement(new fe::gui::label(*m_fontManager.get("RobotFont"), "Game Over! Left Wins!"));
+                                auto handle = m_ui.addElement(new fe::gui::label(*fe::engine::get().getResourceManager<sf::Font>()->get("RobotFont"), "Game Over! Left Wins!"));
                                 static_cast<fe::gui::label*>(m_ui.getElement(handle))->setCharacterSize(64);
                                 m_ui.getElement(handle)->setPosition(fe::engine::get().getWindowSize() / 2.f);
                                 m_endGame.start(fe::seconds(3));
@@ -96,7 +96,7 @@ void gameState::handleEvent(const fe::gameEvent &event)
                                 m_ui.removeElement(m_scoreLeftHandle);
                                 m_ui.removeElement(m_scoreRightHandle);
 
-                                auto handle = m_ui.addElement(new fe::gui::label(*m_fontManager.get("RobotFont"), "Game Over! Right Wins!"));
+                                auto handle = m_ui.addElement(new fe::gui::label(*fe::engine::get().getResourceManager<sf::Font>()->get("RobotFont"), "Game Over! Right Wins!"));
                                 static_cast<fe::gui::label*>(m_ui.getElement(handle))->setCharacterSize(64);
                                 m_ui.getElement(handle)->setPosition(fe::engine::get().getWindowSize() / 2.f);
                                 m_endGame.start(fe::seconds(3));
@@ -160,6 +160,4 @@ void gameState::onDeactive()
     }
 
 void gameState::deinit()
-    {
-        m_fontManager.shutDown();
-    }
+    {}

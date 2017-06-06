@@ -4,7 +4,7 @@
 
 paddle::paddle(fe::Vector2d position) : m_speed(300.f)
     {
-        setSize({ 20, 150 });
+        setVertSize({ 20, 150 });
 
         setColour(sf::Color::Blue);
         setPosition(position);
