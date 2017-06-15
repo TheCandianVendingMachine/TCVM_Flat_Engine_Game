@@ -41,8 +41,13 @@ void optionState::init()
         fe::Handle playButton = m_gui.addElement(new fe::gui::button({ 200, 35 }, [this, maxScoreInput]()
             {
                 fe::engine::get().getStateMachine().queuePop();
-
-                unsigned int maxScore = std::stoul(static_cast<fe::gui::textBox*>(m_gui.getElement(maxScoreInput))->getString());
+                
+                auto str = static_cast<fe::gui::textBox*>(m_gui.getElement(maxScoreInput))->getString();
+                if (str.empty()) 
+                    {
+                        str = "5";
+                    }
+                unsigned int maxScore = std::stoul(str);
                 fe::engine::get().getStateMachine().queuePush<gameState>(fe::gameStateMachine::stateOptions::NONE, !m_aiMode, std::forward<unsigned int>(maxScore));
             }));
         fe::Handle playText = m_gui.addElement(new fe::gui::label(*font, "Start Game"));
