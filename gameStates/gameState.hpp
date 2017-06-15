@@ -7,8 +7,6 @@
 #include <fe/gui/panel.hpp>
 #include <fe/time/countdown.hpp>
 
-#include <SFML/Graphics/Font.hpp>
-
 #include "../controller/entityController.hpp"
 
 class gameState : public fe::baseGameState, public fe::eventHandler
@@ -19,6 +17,8 @@ class gameState : public fe::baseGameState, public fe::eventHandler
 
             entityController *m_left;
             entityController *m_right;
+
+            bool m_pvp;
 
             unsigned int m_pauseKeyHandle;
 
@@ -36,6 +36,8 @@ class gameState : public fe::baseGameState, public fe::eventHandler
             unsigned int m_rPaddle;
 
         public:
+            gameState(bool pvp, unsigned int maxScore);
+
             void init();
             void onActive();
 

@@ -16,6 +16,10 @@
 #include <fe/gui/label.hpp>
 #include <string>
 
+gameState::gameState(bool pvp, unsigned int maxScore) : m_pvp(pvp), m_maxScore(maxScore)
+    {
+    }
+
 void gameState::init()
     {
         m_lPaddle = addEntity<paddle>(fe::Vector2d(40, 0));
@@ -39,10 +43,16 @@ void gameState::init()
 
         addPanel(&m_ui);
 
-        m_maxScore = 0;
-
         m_left = new playerController(getEntity<paddle>(m_lPaddle), 0);
-        m_right = new aiController(getEntity<paddle>(m_rPaddle), m_ball);
+
+        if (m_pvp) 
+            {
+                m_right = new playerController(getEntity<paddle>(m_rPaddle), 1);
+            }
+        else
+            {
+                m_right = new aiController(getEntity<paddle>(m_rPaddle), m_ball);
+            }
 
         getEntity<ball>(m_ball)->setDirection(1);
     }

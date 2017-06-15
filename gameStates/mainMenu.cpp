@@ -1,5 +1,5 @@
 #include "mainMenu.hpp"
-#include "gameState.hpp"
+#include "optionState.hpp"
 
 #include <fe/gui/label.hpp>
 #include <fe/gui/button.hpp>
@@ -17,7 +17,7 @@ void mainMenu::init()
         static_cast<fe::gui::label*>(m_gui.getElement(title))->setCharacterSize(72);
         m_gui.setElementPosition(title, { 0.5f, 0.15f });
 
-        auto startButtonHandle = m_gui.addElement(new fe::gui::button(fe::Vector2d(200, 35), []() { fe::engine::get().getStateMachine().queuePop(); fe::engine::get().getStateMachine().queuePush<gameState>(); }));
+        auto startButtonHandle = m_gui.addElement(new fe::gui::button(fe::Vector2d(200, 35), []() { fe::engine::get().getStateMachine().queuePop(); fe::engine::get().getStateMachine().queuePush<optionState>(); }));
         auto startLabelHandle = m_gui.addElement(new fe::gui::label(*font, "Start Game"));
         auto startButton = m_gui.getElement(startButtonHandle);
         auto startLabel = m_gui.getElement(startLabelHandle);

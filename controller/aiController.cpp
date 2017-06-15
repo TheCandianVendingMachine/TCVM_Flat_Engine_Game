@@ -17,12 +17,12 @@ void aiController::update()
                 auto ballPosition = fe::engine::get().getCurrentState().getEntity(m_ballHandle)->getPosition();
                 auto ballVel = fe::engine::get().getCurrentState().getEntity<ball>(m_ballHandle)->getVelocity();
 
-                fe::Vector2d futurePosition = ((ballVel * 5.f * fe::engine::get().getDeltaTime()) + ballPosition);
-                if (futurePosition.y > m_controlling->getPosition().y + 5.f)
+                fe::Vector2d futurePosition = ((ballVel * 10.f * fe::engine::get().getDeltaTime()) + ballPosition);
+                if (futurePosition.y > m_controlling->getPosition().y + (m_controlling->getSize().y / 2.f) + 5.f) // 5 = buffer to make AI not jitter
                     {
                         m_controlling->moveDown();
                     }
-                else if (futurePosition.y < m_controlling->getPosition().y - 5.f)
+                else if (futurePosition.y < m_controlling->getPosition().y + (m_controlling->getSize().y / 2.f) - 5.f)
                     {
                         m_controlling->moveUp();
                     }
