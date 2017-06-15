@@ -4,9 +4,7 @@
 #include <fstream>
 #include <SFML/Graphics.hpp>
 
-#include "gameStates/gameState.hpp"
 #include "gameStates/mainMenu.hpp"
-#include "gameStates/optionState.hpp"
 #include <fe/subsystems/gameState/gameStateMachine.hpp>
 
 #include <fe/engine.hpp>
@@ -16,7 +14,7 @@ int main()
         fe::engine engine;
         engine.startUp(128_MiB, 100_MiB);
 
-        engine.getStateMachine().queuePush<optionState>();
+        engine.getStateMachine().queuePush<mainMenu>();
 
         engine.run();
 
