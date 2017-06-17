@@ -25,19 +25,19 @@ playerController::playerController(paddle *paddleEnt, int playerNum) : entityCon
                     break;
             }
 
-        m_upHandle = fe::inputManager::get().add(moveUp, up);
-        m_downHandle = fe::inputManager::get().add(moveDown, down);
+        m_upHandle = fe::engine::get().getInputManager().add(moveUp, up);
+        m_downHandle = fe::engine::get().getInputManager().add(moveDown, down);
     }
 
 void playerController::enable(bool value)
     {
         m_enabled = value;
-        fe::inputManager::get().setActive(m_upHandle, value);
-        fe::inputManager::get().setActive(m_downHandle, value);
+        fe::engine::get().getInputManager().setActive(m_upHandle, value);
+        fe::engine::get().getInputManager().setActive(m_downHandle, value);
     }
 
 playerController::~playerController()
     {
-        fe::inputManager::get().removeObject(m_upHandle);
-        fe::inputManager::get().removeObject(m_downHandle);
+        fe::engine::get().getInputManager().removeObject(m_upHandle);
+        fe::engine::get().getInputManager().removeObject(m_downHandle);
     }

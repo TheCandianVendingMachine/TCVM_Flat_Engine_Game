@@ -38,13 +38,13 @@ void pauseMenu::init()
 
 void pauseMenu::onActive()
     {
-        m_unpauseKeyHandle = fe::inputManager::get().add(sf::Keyboard::Escape,
+        m_unpauseKeyHandle = fe::engine::get().getInputManager().add(sf::Keyboard::Escape,
                              fe::input([]() { fe::engine::get().getStateMachine().queuePop(); }, false));
     }
 
 void pauseMenu::onDeactive()
     {
-        fe::inputManager::get().removeObject(m_unpauseKeyHandle);
+        fe::engine::get().getInputManager().removeObject(m_unpauseKeyHandle);
     }
 
 void pauseMenu::deinit()

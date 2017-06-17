@@ -35,7 +35,7 @@ void optionState::init()
             }));
         fe::Handle gameModeText = m_gui.addElement(new fe::gui::label(*font, "Play vs Player"));
 
-        fe::Handle maxScoreInput = m_gui.addElement(new fe::gui::textBox({ 40, 35 }, *font, fe::gui::textBox::options::NUM, 5.f, 2.f, 2, "5"));
+        fe::Handle maxScoreInput = m_gui.addElement(new fe::gui::textBox({ 40, 35 }, *font, fe::gui::textBox::options::DISABLE_ALPHABET, -1.f, 2, 5.f, 2.f, "5"));
         fe::Handle maxScoreText = m_gui.addElement(new fe::gui::label(*font, "Max Score"));
 
         fe::Handle playButton = m_gui.addElement(new fe::gui::button({ 200, 35 }, [this, maxScoreInput]()

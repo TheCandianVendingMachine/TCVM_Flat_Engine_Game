@@ -62,7 +62,7 @@ void gameState::onActive()
         fe::engine::get().getEventSender()->subscribe(this, 0);
         fe::engine::get().getEventSender()->subscribe(this, 1);
 
-        m_pauseKeyHandle = fe::inputManager::get().add(sf::Keyboard::Escape,
+        m_pauseKeyHandle = fe::engine::get().getInputManager().add(sf::Keyboard::Escape,
                            fe::input([]() {fe::engine::get().getStateMachine().queuePush<pauseMenu>(fe::gameStateMachine::stateOptions::RENDER_OVERTOP); }, false));
     }
 
@@ -164,7 +164,7 @@ void gameState::preUpdate()
 
 void gameState::onDeactive()
     {
-        fe::inputManager::get().removeObject(m_pauseKeyHandle);
+        fe::engine::get().getInputManager().removeObject(m_pauseKeyHandle);
         fe::engine::get().getEventSender()->unsubscribe(this, 0);
         fe::engine::get().getEventSender()->unsubscribe(this, 1);
     }
